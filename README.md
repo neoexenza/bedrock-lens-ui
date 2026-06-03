@@ -4,6 +4,15 @@ A real-time web dashboard for AWS Bedrock token usage and cost monitoring. Reads
 
 Inspired by [bedrock-lens](https://github.com/OmarCodes022/bedrock-lens) CLI — no library dependency required.
 
+## Screenshots
+
+**Live tab** — today's usage, auto-refreshing every 5s
+
+![Live tab](docs/screenshot-live.jpg)
+
+**History tab** — aggregated per-model breakdown with region filter
+
+![History tab](docs/screenshot-history.jpg)
 ## Features
 
 - **Live tab** — auto-streams today's usage, refreshes every 5s via SSE
