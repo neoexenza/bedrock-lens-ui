@@ -2,7 +2,7 @@
 
 A real-time web dashboard for AWS Bedrock token usage and cost monitoring. Reads directly from CloudWatch model invocation logs, persists history to a local SQLite database, and streams live updates to the browser via SSE.
 
-Built as a companion to [bedrock-lens](https://github.com/OmarCodes022/bedrock-lens) CLI — no library dependency required.
+Inspired by [bedrock-lens](https://github.com/OmarCodes022/bedrock-lens) CLI — no library dependency required.
 
 ## Features
 
