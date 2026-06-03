@@ -1,0 +1,16 @@
+services:
+  bedrock-lens-ui:
+    build: .
+    container_name: bedrock-lens-ui
+    restart: unless-stopped
+    ports:
+      - "8080:8000"
+    environment:
+      # Option A: pass credentials directly
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-eu-central-1}
+      # Option B: mount ~/.aws (comment out env vars above, uncomment below)
+      # - AWS_SHARED_CREDENTIALS_FILE=/root/.aws/credentials
+    # volumes:
+    #   - ~/.aws:/root/.aws:ro
