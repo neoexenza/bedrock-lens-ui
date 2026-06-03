@@ -218,7 +218,18 @@ def extract_tags(rec: dict) -> list[str]:
         if re.search(pattern, full_text, re.IGNORECASE):
             tags.append(proj_tag)
 
-    return list(set(tags)) if tags else ["type:unknown"]
+    # Fallback: infer from model if no body was logged
+    if not tags:
+        model_id = rec.get("modelId","").lower()
+        # Sonnet = main session (Telegram). Haiku = cron/subagent but body should have been logged.
+        # Embedding models = internal tooling.
+        if "sonnet" in model_id:
+            tags = ["type:telegram"]
+        elif "embed" in model_id:
+            tags = ["type:internal"]
+        else:
+            tags = ["type:unknown"]
+    return list(set(tags))
 
 
 # ── CloudWatch ────────────────────────────────────────────────────────────────
