@@ -15,10 +15,15 @@ Inspired by [bedrock-lens](https://github.com/OmarCodes022/bedrock-lens) CLI —
 ![History tab](docs/screenshot-history.jpg)
 ## Features
 
-- **Live tab** — auto-streams today's usage, refreshes every 5s via SSE
-- **History tab** — aggregated per-model breakdown, filterable by region and date range (7 / 30 / 90 days)
-- **Daily cost chart** — cumulative cost over time (Chart.js)
+- **Live tab** — auto-streams today's usage, refreshes every 5s via SSE, no manual refresh needed
+- **History tab** — aggregated per-model breakdown, filterable by region, date range (7/30/90 days), and tag
+- **Allocation tab** — doughnut pie chart + table breaking spend by tag namespace: type / task / project
+- **Tagging system** — auto-tags every invocation at ingest time:
+  - `type:telegram` / `type:cron` / `type:subagent` / `type:internal`
+  - `task:morning-brief`, `task:email-monitor`, `task:blog-post`, `task:media-monitor`, …
+  - `project:bedrock-lens-ui`, `project:nala`, `project:blog`, `project:trains`, …
 - **SQLite persistence** — all events saved locally; survives CloudWatch log expiry
+- **Daily cost chart** — cumulative cost over time (Chart.js)
 - **Spend threshold alert** — in-page warning when daily cost crosses a set amount
 - **tinyauth-ready** — designed to run behind a reverse proxy with forward auth
 
@@ -183,7 +188,25 @@ requirements.txt
 
 - **FastAPI** + **sse-starlette** — backend + live streaming
 - **Jinja2** — server-rendered HTML
-- **Chart.js** — cost over time chart
-- **SQLite** — local history persistence
+- **Chart.js** — line + doughnut charts
+- **SQLite** — local history + tagging persistence
 - **boto3** — CloudWatch logs reader
 - **Docker** — single container deployment
+
+## Tagging
+
+Every Bedrock invocation is auto-tagged at ingest time by inspecting the CloudWatch `inputBodyJson`:
+
+| Tag | Meaning |
+|---|---|
+| `type:telegram` | Direct conversation / main session |
+| `type:cron` | Scheduled cron job |
+| `type:subagent` | Spawned sub-agent task |
+| `type:internal` | Embedding / internal tooling calls |
+| `task:morning-brief` | Morning briefing cron |
+| `task:email-monitor` | Email monitor cron |
+| `task:blog-post` | Daily blog post cron |
+| `task:media-monitor` | Media stack monitor cron |
+| `project:*` | Project-level grouping (blog, nala, trains, …) |
+
+The **Allocation tab** lets you pivot spend by `type`, `task`, or `project` with a doughnut pie chart and drilldown table. The **History tab** tag filter lets you scope model breakdowns to a single tag.
