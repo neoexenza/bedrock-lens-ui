@@ -6,6 +6,10 @@ Inspired by [bedrock-lens](https://github.com/OmarCodes022/bedrock-lens) CLI —
 
 ## Screenshots
 
+**Allocation tab** — cost breakdown by type / task / project
+
+![Allocation tab](docs/screenshot-allocation.jpg)
+
 **Live tab** — today's usage, auto-refreshing every 5s
 
 ![Live tab](docs/screenshot-live.jpg)
